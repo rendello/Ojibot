@@ -9,7 +9,8 @@ def get_screenshot(ojibwe_word):
 
     driver = webdriver.Firefox()
     element = driver.get(f'https://ojibwe.lib.umn.edu/search?utf8=%E2%9C%93&q={encoded_word}&commit=Search&type=ojibwe')
-    png_data = driver.find_element_by_class_name("main-entry-search").screenshot_as_png 
+    word_png_data = driver.find_element_by_class_name("main-entry-search").screenshot_as_png 
+    #roots_png_data = driver.find_element_by_id("wordParts").screenshot_as_png
     #driver.close()
     return png_data
 
@@ -19,6 +20,6 @@ def write_png_to_file(png_data, filename):
 
 
 if __name__ == "__main__":
-    png_data = get_screenshot('mooz')
+    png_data = get_screenshot('adaawe')
     write_png_to_file(png_data, 'img.png')
 
