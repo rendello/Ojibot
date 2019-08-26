@@ -53,3 +53,43 @@ orthography. The words are then converted and returned as syllabic text.
 The default syllabics use Eastern a-position finals, left-hand w-dot, and vowel
 pointing. By default, no lenis-fortis distinction is made.
 
+- [ ] Discord bot
+	- [x] Has credentials
+	- [x] Setup / basic functionality
+	- [ ] Responds to specific commands
+	- [ ] Usable on many servers
+	- [ ] Configurable per-server
+- [ ] Reddit bot
+	- [ ] Has credentials
+	- [ ] Setup / basic functionality
+	- [ ] Responds to specific commands
+- [ ] Ojibwe to English
+	- [x] Finds correct info
+	- [ ] Formats information correctly
+		- [x] Discord
+		- [ ] Reddit
+	- [ ] Search / return options
+	- [ ] Normalized (lowercase, Fiero) search
+	- [ ] Fuzzy search
+- [ ] English to Ojibwe
+	- [ ] Finds correct info
+	- [ ] Formats information correctly
+		- [ ] Discord
+		- [ ] Reddit
+	- [ ] Search / return options
+	- [ ] Fuzzy search
+- [ ] Romanized to syllabics
+	- [ ] Converts
+	- [ ] Search / return options
+- [ ] Syllabics to romanized
+	- [ ] Converts
+		- [ ] Uses database instead of guessing
+			- [ ] Fuzzy search
+	- [ ] Search / return options
+- [ ] Guide
+	- [ ] Fiero
+		- [ ] Discord
+		- [ ] Reddit
+	- [ ] Syllabic
+		- [ ] Discord
+		- [ ] Reddit
