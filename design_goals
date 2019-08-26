@@ -1,0 +1,9 @@
+
+
+The translation functions will have some degree of fuzzy-searching and use the
+OPD (possibly more?)
+!oji : English word -> Ojibwe word
+!eng : Ojibwe word -> English word
+
+!syl : syllabics -> Fiero
+!rom : Fiero -> syllabics

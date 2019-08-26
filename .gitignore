@@ -4,3 +4,7 @@
 *~
 *.png
 *-journal
+
+# Important, don't reveal the token lol
+secret_token.py
+__pycache__
