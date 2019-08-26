@@ -2,7 +2,6 @@
 *.swp
 *.swo
 *~
-*.png
 *-journal
 
 # Important, don't reveal the token lol
