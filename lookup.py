@@ -21,11 +21,28 @@ def fetch_oji_word_info(word_url):
 
     sections['lemma'] = soup.find(class_='lemma')
     sections['gloss'] = soup.find(class_='glosses')
+    sections['relations'] = soup.find(class_='relations')
     sections['word_parts'] = soup.find(id='wordParts').find(class_="panel-body")
     
     return sections
 
-s = fetch_oji_word_info('anishinaabemowin-ni')
+
+class DiscordFormat():
+    def lemma(s):
+        clean_text = BeautifulSoup(s, "lxml").text
+        formatted = f'# {clean_text}'
+
+        return formatted
+
+    def gloss(s):
+        clean_text = BeautifulSoup(s, "lxml").text
+        formatted = f'{clean_text}'
+
+        return formatted
+
+
+
+s = fetch_oji_word_info('apiichishim-vta')
 
 for k, v in s.items():
     print(f'{k}\n---\n{v}\n\n\n')
