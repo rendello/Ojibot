@@ -23,6 +23,7 @@ def fetch_oji_word_info(word_url):
     sections['gloss'] = soup.find(class_='glosses')
     sections['relations'] = soup.find(class_='relations')
     sections['word_parts'] = soup.find(id='wordParts').find(class_="panel-body")
+    sections['sentence_examples'] = soup.find(id='sentenceExamples')
     
     return sections
 
@@ -44,7 +45,7 @@ def grab_links(soup):
 
 def lemma(s):
     clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
-    formatted = f'# {clean_text}'
+    formatted = f'__**{clean_text}**__'
 
     return formatted
 
@@ -67,29 +68,48 @@ def word_parts(s):
     original_word_html.replace_with(f'**{original_word}**')
 
     # cleans / stylizes links. Unrelated to grab_links()
-    [link.replace_with(f'*{link.text}*') for link in soup.find_all('a')]
+    [link.replace_with(f'__{link.text}__') for link in soup.find_all('a')]
+
+    # removes badges
+    [badge.replace_with('') for badge in soup.find_all(class_='badge')]
 
     formatted = soup.text
+
+    formatted = formatted.replace('\n', ' ')
 
     # for some reason, bs changes <em>it</em> to <em>h/</em>. This will not do.
     formatted = formatted.replace('h/', '*it*')
         
-    print(links)
     return formatted
 
 
+def sentence_examples(s):
+    soup = bs.BeautifulSoup(str(s), 'html.parser')
+
+    # the audio portion of the table has a class, the actual wanted text has no
+    # classes.
+    [tag.replace_with('') for tag in soup.find_all('td') if tag.has_attr('class')]
+
+    strongs = soup.find_all('strong')
+    for strong in strongs:
+        strong.replace_with(f'**{strong.text}**\n')
+
+    smalls = soup.find_all('small')
+    for small in smalls:
+        small.replace_with(f'*{small.text}*\n\n')
+
+    print(soup.text)
+
+    return None
 
 
 
 
-s = fetch_oji_word_info('apiichishim-vta')
 
-for k, v in s.items():
-    #print(f'{k}\n---\n{v}\n\n\n')
-    pass
 
-#print(lemma(s['lemma']))
-#print('---')
-#print(gloss(s['gloss']))
-#print('---')
+s = fetch_oji_word_info('gaandakii-iganaak-ni')
+
+print(lemma(s['lemma']))
+print(gloss(s['gloss']))
 print(word_parts(s['word_parts']))
+print(sentence_examples(s['sentence_examples']))
