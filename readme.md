@@ -1,13 +1,20 @@
 
-# Ojibot: The Ojibwe Discord and Reddit Bot
+# Ojibot: The Ojibwe Reddit and Discord Bot
 Ojibot is a bot for Discord and Reddit that performs tasks relating to the
 Ojibwe language, aka Anishinaabemowin.
 
 ![Ojibot cover featuring Thunderbird](Gitlab_images/cover.png)
 
-## Features
 
-### Synopsis
+## Synopsis
+Reddit is a website composed of many thousands of user-made forums called
+'subreddits'. Discord is a site with user-made chatrooms called 'Discord
+servers'. Both of these services host dedicated communities of First Nations'
+language learners, and both sites allow for automated accounts that respond to
+comments with useful information. This project is meant to fill the Ojibwe-language
+bot niche!
+
+### Features
 Ojibot commands can be invoked with /u/ojibot [command] on Reddit and with !oji
 [command] on enabled Discord servers. Parts in square brackets can be omitted.
 Commands are case-agnostic. 
@@ -31,7 +38,7 @@ arguments in many programming languages, taking the form `command(option1, optio
 The received word is case-normalized and seached in the database. If no such
 word exists, a number of modifications can occur to normalize the orthography
 to a standard variant of the Fiero double-vowel system (“gitchi” or “gici”
-become “gichi”. “ânîn” becomes “aaniin”, etc.) If the new word isn't found, a fuzzy
+become “gichi”, “ânîn” becomes “aaniin”, etc.) If the new word isn't found, a fuzzy
 seach is applied and any results that are similar enough will be shown.
 
 If a word is found in the database, the definition will be returned. TODO what other data?
@@ -45,3 +52,4 @@ orthography. The words are then converted and returned as syllabic text.
 
 The default syllabics use Eastern a-position finals, left-hand w-dot, and vowel
 pointing. By default, no lenis-fortis distinction is made.
+
