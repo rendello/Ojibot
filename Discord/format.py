@@ -106,3 +106,22 @@ def fmt_all(sections):
             formatted_sections[s] = None
 
     return formatted_sections
+
+def fmt_dict_to_text(formatted):
+    ''' Combines formatted strings in a single string.
+
+    Args:
+        formatted: a <dict> of formatted sections and NoneTypes.
+
+    Returns:
+        fmt_string: a <string> with all available sections rendered in a
+        logical order.
+    '''
+    string_order = ['lemma', 'gloss', 'relations', 'word_parts', 'sentence_examples']
+    fmt_string = '.' # Discord won't allow initial newline without a character
+
+    for string in string_order:
+        if formatted[string] is not None:
+            fmt_string += f'\n{formatted[string]}'
+
+    return fmt_string
