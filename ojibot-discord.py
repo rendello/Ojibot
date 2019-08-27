@@ -2,7 +2,9 @@
 
 import discord
 
-from secret_token import client_secret
+from Discord.secret_token import client_secret
+from Discord.format import fmt_all
+import Core.lookup
 
 client = discord.Client()
 
@@ -26,8 +28,15 @@ __Example sentences__
 @client.event
 async def on_message(message):
     print(message.content)
-    if message.content.find("!hello") != -1:
-        await message.channel.send("Hi")
-        await message.channel.send(string)
+    if message.content.find("!oji") != -1:
+        if message.author == client.user:
+            return
+        #await message.channel.send("Hi")
+        #await message.channel.send(string)
+        command = message.content.replace('!oji ', '', 1)
+        info = Core.lookup.fetch_oji_word_info(command)
+        formatted_info = fmt_all(info)
+
+        await message.channel.send(formatted_info)
 
 client.run(client_secret)

@@ -1,5 +1,7 @@
 #!/usr/bin/python3.6
 
+import bs4 as bs
+
 def grab_links(soup):
     ''' Grabs all link text and urls from soup.
     
@@ -15,19 +17,19 @@ def grab_links(soup):
 
     return links
 
-def lemma(s):
+def fmt_lemma(s):
     clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
     formatted = f'**{clean_text}**'
 
     return formatted
 
-def gloss(s):
+def fmt_gloss(s):
     clean_text = bs.BeautifulSoup(str(s), 'html.parser').text.strip()
     formatted = f'> {clean_text}'
 
     return formatted
 
-def word_parts(s):
+def fmt_word_parts(s):
     soup = bs.BeautifulSoup(str(s), "html.parser")
     
     links = grab_links(soup)
@@ -57,7 +59,7 @@ def word_parts(s):
     return formatted
 
 
-def sentence_examples(s):
+def fmt_sentence_examples(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
 
     # the audio portion of the table has a class, the actual wanted text has no
@@ -76,14 +78,31 @@ def sentence_examples(s):
 
     return None
 
+def fmt_relations(s):
+    None #TODO make it not this way
 
+def fmt_all(sections):
+    ''' Formats all sections given.
 
+    Args:
+        sections: <dict> with all available word info sections
 
+    Returns:
+        formatted_sections: <dict> with fromatted sections as values
+    '''
+    formatters = {
+        'lemma': fmt_lemma,
+        'gloss': fmt_gloss,
+        'word_parts': fmt_word_parts,
+        'sentence_examples': fmt_sentence_examples,
+        'relations': fmt_relations
+    }
+    formatted_sections = {}
 
+    for s, v in sections.items():
+        if v is not None:
+            formatted_sections[s] = formatters[s](v)
+        else:
+            formatted_sections[s] = None
 
-s = fetch_oji_word_info('gaandakii-iganaak-ni')
-
-print(lemma(s['lemma']))
-print(gloss(s['gloss']))
-print(word_parts(s['word_parts']))
-print(sentence_examples(s['sentence_examples']))
+    return formatted_sections
