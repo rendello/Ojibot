@@ -78,7 +78,7 @@ def fmt_sentence_examples(s):
     return formatted
 
 def fmt_relations(s):
-    None #TODO make it not this way
+    return None #TODO make it not this way
 
 def fmt_all(sections):
     ''' Formats all sections given.
