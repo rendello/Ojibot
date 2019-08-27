@@ -74,9 +74,8 @@ def fmt_sentence_examples(s):
     for small in smalls:
         small.replace_with(f'> *{small.text}*\n')
 
-    print(soup.text)
-
-    return None
+    formatted = soup.text
+    return formatted
 
 def fmt_relations(s):
     None #TODO make it not this way
@@ -117,6 +116,7 @@ def fmt_dict_to_text(formatted):
         fmt_string: a <string> with all available sections rendered in a
         logical order.
     '''
+    print(formatted)
     string_order = ['lemma', 'gloss', 'relations', 'word_parts', 'sentence_examples']
     fmt_string = '.' # Discord won't allow initial newline without a character
 
