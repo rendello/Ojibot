@@ -26,7 +26,6 @@ def fetch_oji_word_info(word_url):
         sections['word_parts'] = soup.find(id='wordParts').find(class_="panel-body")
     except AttributeError:
         sections['word_parts'] = None
-
     sections['sentence_examples'] = soup.find(id='sentenceExamples')
     
     return sections
