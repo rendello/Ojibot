@@ -3,20 +3,19 @@
 import bs4 as bs
 import urllib.request
 
-from Tools.db_context_manager import dbopen
+from Core.Tools.db_context_manager import dbopen
 
 
 def get_word_urls(word):
-    ''' Grabs every entry url for a given word.
+    ''' Grabs every entry's OPD url-ending for a given word.
 
     Args:
         word: <str>, an Ojibwe word.
 
     Returns:
         <list> of unique <str>s, the urls for the given words.
-    
     '''
-    with dbopen('words.db') as c:
+    with dbopen('Core/words.db') as c:
         c.execute('SELECT url FROM words WHERE title=(?)', [word])
         results = c.fetchall()
 

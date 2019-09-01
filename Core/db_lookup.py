@@ -4,9 +4,9 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
 import sqlite3
-from Tools.db_context_manager import dbopen
+from Core.Tools.db_context_manager import dbopen
 
-from normalize import to_rough_fiero
+from Core.normalize import to_rough_fiero
 
 
 def fuzzy_match(requested_word, no_of_returns):
@@ -22,7 +22,7 @@ def fuzzy_match(requested_word, no_of_returns):
         ratio.
     '''
     highest_matches = [{'word':None,'ratio':0}] * no_of_returns
-    with dbopen('words.db') as c:
+    with dbopen('Core/words.db') as c:
         c.execute('SELECT title FROM words;')
         for result in c.fetchall():
             returned_text = result[0]

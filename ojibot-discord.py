@@ -1,22 +1,30 @@
 #!/usr/bin/python3.6
 
 import discord
+from discord.ext import commands
 
 from Discord.secret_token import client_secret
 from Discord.format import fmt_all, fmt_dict_to_text
-import Core.lookup
+from Core.lookup import get_word_urls, fetch_oji_word_info
+from Core.db_lookup import fuzzy_match
+from Core.normalize import to_rough_fiero
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='!oji ')
 
-@client.event
-async def on_message(message):
-    if message.content.find("!oji") != -1:
-        if message.author == client.user:
-            return
-        command = message.content.replace('!oji ', '', 1)
-        info = Core.lookup.fetch_oji_word_info(command)
-        formatted_info = fmt_dict_to_text(fmt_all(info))
+@bot.command()
+async def oji(ctx, word):
+    urls = get_word_urls(word)
+    if urls == []:
+        word = to_rough_fiero(word)
+        word = fuzzy_match(word, 1)[0]['word']
+        print(word)
+    urls = get_word_urls(word)
+    for url in urls:
+        info = fetch_oji_word_info(url)
+        string = fmt_dict_to_text(fmt_all(info))
+        await ctx.send(string)
+    
 
-        await message.channel.send(formatted_info)
 
-client.run(client_secret)
+
+bot.run(client_secret)
