@@ -5,12 +5,29 @@ import urllib.request
 
 from Tools.db_context_manager import dbopen
 
-def get_word_url(word):
+
+def get_word_urls(word):
+    ''' Grabs every entry url for a given word.
+
+    Args:
+        word: <str>, an Ojibwe word.
+
+    Returns:
+        <list> of unique <str>s, the urls for the given words.
+    
+    '''
     with dbopen('words.db') as c:
         c.execute('SELECT url FROM words WHERE title=(?)', [word])
-        result = c.fetchone()[0].replace('\n','')
+        results = c.fetchall()
 
-        return result
+        urls = []
+        for result in results:
+            url = result[0].replace('\n', '')
+            if url not in urls:
+                urls.append(url)
+
+        return urls
+
 
 def fetch_oji_word_info(word_url):
     ''' Fetches word information from the Ojibwe People's Dictionary.
