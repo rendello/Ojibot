@@ -31,6 +31,7 @@ def to_rough_fiero(original):
         'hk': 'k',
         'hp': 'p',
         'ht': 't',
+        'ie': 'ii'
         'nn': 'n',
         'ss': 's',
         'tch': 'ch',
@@ -39,7 +40,7 @@ def to_rough_fiero(original):
         'ê': 'e',
         'î': 'ii',
         'š': 'sh',
-        'ž': 'zh'
+        'ž': 'zh',
     }
 
     word = original.lower()

@@ -3,6 +3,14 @@
 import bs4 as bs
 import urllib.request
 
+from Tools.db_context_manager import dbopen
+
+def get_word_url(word):
+    with dbopen('words.db') as c:
+        c.execute('SELECT url FROM words WHERE title=(?)', [word])
+        result = c.fetchone()[0].replace('\n','')
+
+        return result
 
 def fetch_oji_word_info(word_url):
     ''' Fetches word information from the Ojibwe People's Dictionary.
