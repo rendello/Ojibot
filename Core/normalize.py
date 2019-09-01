@@ -42,11 +42,8 @@ def to_rough_fiero(original):
         'ž': 'zh'
     }
 
-    original = original.lower()
+    word = original.lower()
     for k in sorted(fiero_normalizations, key=len, reverse=True):
-        original = original.replace(k, fiero_normalizations[k])
-    print(original)
+        word = word.replace(k, fiero_normalizations[k])
 
-to_rough_fiero('anishinaabe')
-to_rough_fiero('unishinawbay')
-to_rough_fiero('muckadaymashkeekiwabu')
+    return word
