@@ -69,8 +69,8 @@ pointing. By default, no lenis-fortis distinction is made.
 		- [x] Discord
 		- [ ] Reddit
 	- [ ] Search / return options
-	- [ ] Normalized (lowercase, Fiero) search
-	- [ ] Fuzzy search
+	- [x] Normalized (lowercase, Fiero) search
+	- [x] Fuzzy search
 - [ ] English to Ojibwe
 	- [ ] Finds correct info
 	- [ ] Formats information correctly

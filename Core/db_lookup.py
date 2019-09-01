@@ -43,10 +43,3 @@ def fuzzy_match(requested_word, no_of_returns):
                             highest_matches.pop(0)
         highest_matches.reverse()
         return highest_matches
-
-print(fuzzy_match('anishinaabe', 1))
-print(fuzzy_match('zhaangweshi', 25))
-                    
-
-
-
