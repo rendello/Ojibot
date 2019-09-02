@@ -17,17 +17,20 @@ def grab_links(soup):
 
     return links
 
+
 def fmt_lemma(s):
     clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
     formatted = f'**{clean_text}**'
 
     return formatted
 
+
 def fmt_gloss(s):
     clean_text = bs.BeautifulSoup(str(s), 'html.parser').text.strip()
     formatted = f'> {clean_text}'
 
     return formatted
+
 
 def fmt_word_parts(s):
     soup = bs.BeautifulSoup(str(s), "html.parser")
@@ -77,8 +80,13 @@ def fmt_sentence_examples(s):
     formatted = soup.text
     return formatted
 
+
 def fmt_relations(s):
-    return None #TODO make it not this way
+    clean_text = bs.BeautifulSoup(str(s), 'html.parser').text.strip()
+    formatted = f'*{clean_text}*'.replace('\n', '') + '\n'
+
+    return formatted
+
 
 def fmt_all(sections):
     ''' Formats all sections given.
@@ -105,6 +113,7 @@ def fmt_all(sections):
             formatted_sections[s] = None
 
     return formatted_sections
+
 
 def fmt_dict_to_text(formatted):
     ''' Combines formatted strings in a single string.
