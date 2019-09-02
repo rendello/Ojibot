@@ -56,8 +56,8 @@ pointing. By default, no lenis-fortis distinction is made.
 - [ ] Discord bot
 	- [x] Has credentials
 	- [x] Setup / basic functionality
-	- [ ] Responds to specific commands
-	- [ ] Usable on many servers
+	- [x] Responds to specific commands
+	- [x] Usable on many servers
 	- [ ] Configurable per-server
 - [ ] Reddit bot
 	- [ ] Has credentials

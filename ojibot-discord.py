@@ -3,11 +3,12 @@
 import discord
 from discord.ext import commands
 
-from Discord.secret_token import client_secret
-from Discord.format import fmt_all, fmt_dict_to_text
 from Core.lookup import get_word_urls, fetch_oji_word_info
 from Core.db_lookup import fuzzy_match, get_random_word
 from Core.normalize import to_rough_fiero
+
+from Discord.secret_token import client_secret
+from Discord.format import fmt_all, fmt_dict_to_text
 
 bot = commands.Bot(command_prefix='!')
 
@@ -22,7 +23,8 @@ def oji_backend(word):
         word: <str>, a supposed Ojibwe word.
 
     Returns:
-        <None>
+        string: a <str> of nicely formatted information about the requested
+        word (or whatever word's most similar).
     '''
     urls = get_word_urls(word)
 
