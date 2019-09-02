@@ -1,5 +1,7 @@
 #!/usr/bin/python3.6
 
+from random import randint
+
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
@@ -43,3 +45,13 @@ def fuzzy_match(requested_word, no_of_returns):
                             highest_matches.pop(0)
         highest_matches.reverse()
         return highest_matches
+
+
+def get_random_word():
+    with dbopen('Core/words.db') as c:
+        c.execute('SELECT MAX(rowid) FROM words')
+        ceiling = c.fetchone()[0]
+        rand_id = randint(0, ceiling)
+        c.execute('SELECT title FROM words WHERE rowid=?', [rand_id])
+        word = c.fetchone()[0]
+    return word
