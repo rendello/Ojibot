@@ -64,21 +64,23 @@ def fmt_word_parts(s):
 
 def fmt_sentence_examples(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
+    string_parts = []
 
     # the audio portion of the table has a class, the actual wanted text has no
     # classes.
     [tag.replace_with('') for tag in soup.find_all('td') if tag.has_attr('class')]
 
-    strongs = soup.find_all('strong')
-    for strong in strongs:
-        strong.replace_with(f'**{strong.text}**\n')
+    for i in soup.find_all():
+        print(i)
+        print('---\n')
+    for tag in soup.find_all():
+        if tag.name == 'strong':
+            string_parts.append({'sect':'oji_example', 'text':tag.text, 'url':None})
+        elif tag.name == 'small':
+            string_parts.append({'sect':'eng_example', 'text':tag.text, 'url':None})
 
-    smalls = soup.find_all('small')
-    for small in smalls:
-        small.replace_with(f'> *{small.text}*\n')
-
-    formatted = soup.text
-    return formatted
+    for sp in string_parts:
+        print(sp)
 
 
 def fmt_relations(s):
@@ -132,7 +134,7 @@ def fmt_dict_to_text(formatted):
         fmt_string: a <string> with all available sections rendered in a
         logical order.
     '''
-    print(formatted)
+    #print(formatted)
     string_order = ['lemma', 'relations', 'gloss', '\n', 'inflections', '\n', 'word_parts', '\n', 'sentence_examples']
     fmt_string = ''
 
