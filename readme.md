@@ -5,7 +5,6 @@ Ojibwe language, aka Anishinaabemowin.
 
 ![Ojibot cover featuring Thunderbird](Gitlab_images/cover.png)
 
-
 ## Synopsis
 Reddit is a website composed of many thousands of user-made forums called
 'subreddits'. Discord is a site with user-made chatrooms called 'Discord
@@ -14,10 +13,12 @@ language learners, and both sites allow for automated accounts that respond to
 comments with useful information. This project is meant to fill the Ojibwe-language
 bot niche!
 
-### Features
-Ojibot commands can be invoked with /u/ojibot [command] on Reddit and with !oji
-[command] on enabled Discord servers. Parts in square brackets can be omitted.
-Commands are case-agnostic. 
+## Usage
+Ojibot can be called on reddit with /u/ojibot <command>, or on Discord with
+!<command> or @[ojibot] <command>. The prompt is configurable on each server.
+
+### Commands
+Parts in square brackets can be omitted.  Commands are case-agnostic. 
 
 | Command | Description |
 | --- | --- |
@@ -28,18 +29,29 @@ Commands are case-agnostic.
 | guide | Shows a writing guide for Ojibwe |
 | syl-guide | Shows a writing guide for Ojibwe Syllabics |
 
-### Detailed Overview
-This section is quite technical.
+## Installing
+Ojibot should be available anywhere on Reddit at any time, but will only
+respond if bots are allowed on the subreddit.
 
+Ojibot needs to be invited to a Discord server by an admin in order to start,
+which can be done by clicking this link (Incomplete).
+
+There is no need to install any of these files or install the bot itself, but
+as Open Source software you may run it yourself and/or modify it, just be sure
+to follow the license and change the fork's name.
+
+### Detailed Command Overview
 Commands can take options for more granular outputs. Options are written like
-arguments in many programming languages, taking the form `command(option1, option2)`.
+arguments in many programming languages, taking the form
+`command(option1="value", option2="other_value")`.
 
 #### eng[lish]
-The received word is case-normalized and seached in the database. If no such
-word exists, a number of modifications can occur to normalize the orthography
-to a standard variant of the Fiero double-vowel system (“gitchi” or “gici”
-become “gichi”, “ânîn” becomes “aaniin”, etc.) If the new word isn't found, a fuzzy
-seach is applied and any results that are similar enough will be shown.
+The Ojibwe People's Dictionary, used for this project, uses Fiero Double Vowel
+orthography.
+
+In this program, words like “gitchi” or “gici” automatically become “gichi”,
+“ânîn” becomes “aaniin”, and so on (if they aren't found right away). The word
+is then searched in the database, and the closest match is shown.
 
 If a word is found in the database, the definition will be returned. TODO what other data?
 
