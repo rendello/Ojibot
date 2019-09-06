@@ -19,10 +19,10 @@ def grab_links(soup):
 
 
 def fmt_lemma(s):
-    clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
-    formatted = f'« **{clean_text}** »'
+    soup = bs.BeautifulSoup(str(s), 'html.parser')
+    string_parts = [{'name':'word_title', 'text':soup.text, 'url':None}]
 
-    return formatted
+    return string_parts
 
 
 def fmt_gloss(s):
@@ -43,10 +43,12 @@ def fmt_inflections(s):
 
 def fmt_word_parts(s):
     soup = bs.BeautifulSoup(str(s), "html.parser")
+    string_parts = []
     
-    links = grab_links(soup)
+    #for tag in soup.contents:
+        #if tag.name == 'strong':
+        #    string_parts.append({'sect':'orig_word', 'text':tag.text, 'url':None})
 
-    soup.find('strong').replace_with('')
 
     # cleans / stylizes links. Unrelated to grab_links()
     [link.replace_with(f'__{link.text}__') for link in soup.find_all('a')]
@@ -66,21 +68,13 @@ def fmt_sentence_examples(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
     string_parts = []
 
-    # the audio portion of the table has a class, the actual wanted text has no
-    # classes.
-    [tag.replace_with('') for tag in soup.find_all('td') if tag.has_attr('class')]
-
-    for i in soup.find_all():
-        print(i)
-        print('---\n')
     for tag in soup.find_all():
         if tag.name == 'strong':
             string_parts.append({'sect':'oji_example', 'text':tag.text, 'url':None})
         elif tag.name == 'small':
             string_parts.append({'sect':'eng_example', 'text':tag.text, 'url':None})
 
-    for sp in string_parts:
-        print(sp)
+    return string_parts
 
 
 def fmt_relations(s):
