@@ -20,7 +20,7 @@ def grab_links(soup):
 
 def fmt_lemma(s):
     clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
-    formatted = f'**{clean_text}**'
+    formatted = f'« **{clean_text}** »'
 
     return formatted
 
@@ -32,17 +32,21 @@ def fmt_gloss(s):
     return formatted
 
 
+def fmt_inflections(s):
+    clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
+    clean_text = clean_text.strip()
+    clean_text = clean_text.replace('; ','\n')
+    formatted = f'`{clean_text}`'
+
+    return formatted
+
+
 def fmt_word_parts(s):
     soup = bs.BeautifulSoup(str(s), "html.parser")
     
     links = grab_links(soup)
 
-    # changes the unsplit word <strong>word</strong> to a markdown
-    # **word**. The html tags can be stripped since they'll all be stripped
-    # later anyway
-    original_word_html = soup.find('strong')
-    original_word = original_word_html.text
-    original_word_html.replace_with(f'**{original_word}**  <newline>')
+    soup.find('strong').replace_with('')
 
     # cleans / stylizes links. Unrelated to grab_links()
     [link.replace_with(f'__{link.text}__') for link in soup.find_all('a')]
@@ -54,11 +58,7 @@ def fmt_word_parts(s):
 
     # destroy the random newlines, but keep that one newline that I want
     formatted = formatted.replace('\n', ' ')
-    formatted = formatted.replace('<newline>', '\n')
 
-    # for some reason, bs changes <em>it</em> to <em>h/</em>. This will not do.
-    formatted = formatted.replace('h/', '*it*')
-        
     return formatted
 
 
@@ -82,8 +82,14 @@ def fmt_sentence_examples(s):
 
 
 def fmt_relations(s):
-    clean_text = bs.BeautifulSoup(str(s), 'html.parser').text.strip()
-    formatted = f'*{clean_text}*'.replace('\n', '') + '\n'
+    soup = bs.BeautifulSoup(str(s), 'html.parser')
+    [tag.replace_with('') for tag in soup.find_all('span') if 'badge' in tag.get('class')]
+
+    clean_text = soup.text.strip()
+    if clean_text != '':
+        formatted = f'*{clean_text}*'.replace('\n', '')
+    else:
+        return None
 
     return formatted
 
@@ -100,6 +106,7 @@ def fmt_all(sections):
     formatters = {
         'lemma': fmt_lemma,
         'gloss': fmt_gloss,
+        'inflections': fmt_inflections,
         'word_parts': fmt_word_parts,
         'sentence_examples': fmt_sentence_examples,
         'relations': fmt_relations
@@ -126,11 +133,13 @@ def fmt_dict_to_text(formatted):
         logical order.
     '''
     print(formatted)
-    string_order = ['lemma', 'gloss', 'relations', 'word_parts', 'sentence_examples']
-    fmt_string = '.' # Discord won't allow initial newline without a character
+    string_order = ['lemma', 'relations', 'gloss', '\n', 'inflections', '\n', 'word_parts', '\n', 'sentence_examples']
+    fmt_string = ''
 
     for string in string_order:
-        if formatted[string] is not None:
+        if string == '\n':
+            fmt_string += '\n'
+        elif formatted[string] is not None:
             fmt_string += f'\n{formatted[string]}'
 
     return fmt_string
