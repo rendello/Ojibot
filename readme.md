@@ -14,8 +14,8 @@ comments with useful information. This project is meant to fill the Ojibwe-langu
 bot niche!
 
 ## Usage
-Ojibot can be called on reddit with /u/ojibot <command>, or on Discord with
-!<command> or @[ojibot] <command>. The prompt is configurable on each server.
+Ojibot can be called on reddit with /u/ojibot \<command\>, or on Discord with
+!\<command\> or @[ojibot] \<command\>. The prompt is configurable on each server.
 
 ### Commands
 Parts in square brackets can be omitted.  Commands are case-agnostic. 
