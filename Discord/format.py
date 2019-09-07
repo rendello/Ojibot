@@ -2,34 +2,19 @@
 
 import bs4 as bs
 
-def grab_links(soup):
-    ''' Grabs all link text and urls from soup.
-    
-    Args:
-        soup: a bs.BeautifulSoup() <object>.
-    
-    Returns:
-        links: <list> of <dict>s, each containing a 'text' and 'url' pair.
-    '''
-    links = []
-    for link in soup.find_all('a'):
-        links.append({'text':link.text, 'url':link.get('href')})
-
-    return links
-
 
 def fmt_lemma(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
-    string_parts = [{'name':'word_title', 'text':soup.text, 'url':None}]
+    string_parts = [{'sect':'lemma', 'text':soup.text, 'url':None}]
 
     return string_parts
 
 
 def fmt_gloss(s):
-    clean_text = bs.BeautifulSoup(str(s), 'html.parser').text.strip()
-    formatted = f'> {clean_text}'
+    soup = bs.BeautifulSoup(str(s), 'html.parser')
+    string_parts = [{'sect':'gloss', 'text':soup.text, 'url':None}]
 
-    return formatted
+    return string_parts
 
 
 def fmt_inflections(s):
@@ -45,7 +30,9 @@ def fmt_word_parts(s):
     soup = bs.BeautifulSoup(str(s), "html.parser")
     string_parts = []
     
-    #for tag in soup.contents:
+    for tag in soup.find_all():
+        pass
+        #print(tag)
         #if tag.name == 'strong':
         #    string_parts.append({'sect':'orig_word', 'text':tag.text, 'url':None})
 
@@ -79,15 +66,15 @@ def fmt_sentence_examples(s):
 
 def fmt_relations(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
-    [tag.replace_with('') for tag in soup.find_all('span') if 'badge' in tag.get('class')]
+    string_parts = []
 
-    clean_text = soup.text.strip()
-    if clean_text != '':
-        formatted = f'*{clean_text}*'.replace('\n', '')
-    else:
-        return None
+    string_parts.append({'sect':'paired_preamble', 'text':'Paired with:', 'url':None})
 
-    return formatted
+    relations_link = soup.find('a')
+    string_parts.append({'sect':'paired_word', 'text': relations_link.text, 'url':relations_link['href']})
+
+    print(string_parts)
+    return string_parts
 
 
 def fmt_all(sections):
