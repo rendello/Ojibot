@@ -6,10 +6,18 @@ def strip_newlines_and_whitespace(string):
     return string.replace('\n', '').strip()
 
 
-def fmt_simple(s):
+def fmt_lemma(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
     text = strip_newlines_and_whitespace(soup.text)
     string_parts = [{'sect':'lemma', 'text':text, 'url':None}]
+
+    return string_parts
+
+
+def fmt_gloss(s):
+    soup = bs.BeautifulSoup(str(s), 'html.parser')
+    text = strip_newlines_and_whitespace(soup.text)
+    string_parts = [{'sect':'gloss', 'text':text, 'url':None}]
 
     return string_parts
 
@@ -90,8 +98,8 @@ def fmt_all(sections):
         formatted_sections: <dict> with fromatted sections as values
     '''
     formatters = {
-        'lemma': fmt_simple,
-        'gloss': fmt_simple,
+        'lemma': fmt_lemma,
+        'gloss': fmt_gloss,
         'inflections': fmt_inflections,
         'word_parts': fmt_word_parts,
         'sentence_examples': fmt_sentence_examples,
