@@ -45,7 +45,8 @@ def fetch_oji_word_info(word_url):
 
     sections['lemma'] = soup.find(class_='lemma')
     sections['gloss'] = soup.find(class_='glosses')
-    sections['relations'] = soup.find(class_='relations')
+    #sections['relations'] = soup.find(class_='relations')
+    sections['relations'] = None
     sections['inflections'] = soup.find(class_='inflectional-forms')
     try:
         sections['word_parts'] = soup.find(id='wordParts').find(class_="panel-body")

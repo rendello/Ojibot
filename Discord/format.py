@@ -67,6 +67,7 @@ def serialize_sentence_examples(s):
 
 def serialize_relations(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
+
     string_parts = []
 
     string_parts.append({'sect':'paired_preamble', 'text':'Paired with: ', 'url':None})
@@ -89,7 +90,7 @@ def serialize_all(sections):
     serialized_sections = []
 
     for section, v in sections.items():
-        if v is not None:
+        if v != None:
             for section in serializers[section](v):
                 serialized_sections.append(section)
 
@@ -124,7 +125,7 @@ def format_for_discord(serialized_sections):
         'inflection': ('', ': '),
         'TMA': ('*', '*\n'),
         'oji_example': ('**', '**\n'),
-        'eng_example': ('>*', '*\n'),
+        'eng_example': ('> *', '*\n'),
         'paired_preamble': ('',''),
         'paired_word': ('',''),
         'orig_word': ('',''),

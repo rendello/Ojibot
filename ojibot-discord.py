@@ -41,8 +41,6 @@ def oji_backend(word):
         serialized = serialize_all(info)
         string = format_for_discord(serialized)
 
-    #    string = fmt_dict_to_text(fmt_all(info))
-    #return string
     return string
 
 
