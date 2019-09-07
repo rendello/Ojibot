@@ -98,6 +98,7 @@ def serialize_all(sections):
 
 def int_to_superscript(integer):
     number_superscripts = {
+        '0': '⁰',
         '1': '¹',
         '2': '²',
         '3': '³',
