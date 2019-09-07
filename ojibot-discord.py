@@ -8,7 +8,7 @@ from Core.db_lookup import fuzzy_match, get_random_word
 from Core.normalize import to_rough_fiero
 
 from Discord.secret_token import client_secret
-from Discord.format import serialize_all
+from Discord.format import serialize_all, format_for_discord
 
 bot = commands.Bot(command_prefix='!')
 
@@ -39,8 +39,7 @@ def oji_backend(word):
     for url in urls:
         info = fetch_oji_word_info(url)
         serialized = serialize_all(info)
-        for s in serialized:
-            string += s['text']
+        string = format_for_discord(serialized)
 
     #    string = fmt_dict_to_text(fmt_all(info))
     #return string

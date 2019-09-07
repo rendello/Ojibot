@@ -94,3 +94,26 @@ def serialize_all(sections):
                 serialized_sections.append(section)
 
     return serialized_sections
+
+
+def format_for_discord(serialized_sections):
+    sect_formatting = {
+        'lemma': ('**«','»**\n'),
+        'gloss': ('*', '*\n'),
+        'inflection': ('', ': '),
+        'TMA': ('*', '*\n'),
+        'oji_example': ('**', '**\n'),
+        'eng_example': ('>*', '*\n'),
+        'paired_preamble': ('',''),
+        'paired_word': ('',''),
+        'orig_word': ('',''),
+        'link': ('',''),
+        'text': ('','')
+    }
+    string = ''
+    for s in serialized_sections:
+        fmt = sect_formatting[s['sect']]
+        sect_string = f'{fmt[0]}{s["text"]}{fmt[1]}'
+        string += sect_string
+    
+    return string
