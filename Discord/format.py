@@ -23,12 +23,18 @@ def fmt_gloss(s):
 
 
 def fmt_inflections(s):
-    clean_text = bs.BeautifulSoup(str(s), 'html.parser').text
-    clean_text = clean_text.strip()
-    clean_text = clean_text.replace('; ','\n')
-    formatted = f'`{clean_text}`'
+    soup = bs.BeautifulSoup(str(s), "html.parser")
+    string_parts = []
+    
+    for child in soup.p.children:
+        if child.name == 'strong':
+            string_parts.append({'sect':'inflection', 'text':child.text, 'url':None})
+        elif child.name == 'em':
+            string_parts.append({'sect':'TMA', 'text':child.text, 'url':None})
+        else:
+            string_parts.append({'sect':'text', 'text':child, 'url':None})
 
-    return formatted
+    return string_parts
 
 
 def fmt_word_parts(s):
@@ -43,24 +49,7 @@ def fmt_word_parts(s):
         else:
             string_parts.append({'sect':'text', 'text':child, 'url':None})
 
-    print(string_parts)
     return string_parts
-
-
-
-
-    # cleans / stylizes links. Unrelated to grab_links()
-    [link.replace_with(f'__{link.text}__') for link in soup.find_all('a')]
-
-    # removes badges
-    [badge.replace_with('') for badge in soup.find_all(class_='badge')]
-
-    formatted = soup.text
-
-    # destroy the random newlines, but keep that one newline that I want
-    formatted = formatted.replace('\n', ' ')
-
-    return formatted
 
 
 def fmt_sentence_examples(s):
