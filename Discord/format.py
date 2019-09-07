@@ -32,7 +32,7 @@ def serialize_inflections(s):
         elif child.name == 'em':
             string_parts.append({'sect':'TMA', 'text':child.text, 'url':None})
         elif child.name == None:
-            string_parts.append({'sect':'text', 'text':child, 'url':None})
+            string_parts.append({'sect':'text', 'text':child.replace(';',''), 'url':None})
 
     return string_parts
 
@@ -96,6 +96,26 @@ def serialize_all(sections):
     return serialized_sections
 
 
+def int_to_superscript(integer):
+    number_superscripts = {
+        '1': '¹',
+        '2': '²',
+        '3': '³',
+        '4': '⁴',
+        '5': '⁵',
+        '6': '⁶',
+        '7': '⁷',
+        '8': '⁸',
+        '9': '⁹',
+    }
+    superscripted_number = ''
+    string_number = str(integer)
+    for char in string_number:
+        superscripted_number += number_superscripts[char]
+
+    return superscripted_number
+
+
 def format_for_discord(serialized_sections):
     sect_formatting = {
         'lemma': ('**«','»**\n'),
@@ -110,10 +130,27 @@ def format_for_discord(serialized_sections):
         'link': ('',''),
         'text': ('','')
     }
+
     string = ''
+    url_no = 1
+    links = []
+
     for s in serialized_sections:
         fmt = sect_formatting[s['sect']]
-        sect_string = f'{fmt[0]}{s["text"]}{fmt[1]}'
+
+        text = s['text']
+        url = s['url']
+        if url != None:
+            superscript_no = int_to_superscript(url_no)
+            text += f' __{text}__`{superscript_no}`'
+            links.append({'no': url_no, 'url':url})
+            url_no += 1
+
+        sect_string = f'{fmt[0]}{text}{fmt[1]}'
         string += sect_string
+
+    string += "\n"
+    for link in links:
+        string += f'`{str(link["no"])}`: https://ojibwe.lib.umn.edu{link["url"]}\n'
     
     return string
