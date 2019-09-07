@@ -69,7 +69,7 @@ def serialize_relations(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
     string_parts = []
 
-    string_parts.append({'sect':'paired_preamble', 'text':'Paired with:', 'url':None})
+    string_parts.append({'sect':'paired_preamble', 'text':'Paired with: ', 'url':None})
 
     relations_link = soup.find('a')
     string_parts.append({'sect':'paired_word', 'text': relations_link.text, 'url':relations_link['href']})
@@ -118,8 +118,8 @@ def int_to_superscript(integer):
 
 def format_for_discord(serialized_sections):
     sect_formatting = {
-        'lemma': ('**«','»**\n'),
-        'gloss': ('*', '*\n'),
+        'lemma': ('**« ',' »**\n'),
+        'gloss': ('> ', '\n'),
         'inflection': ('', ': '),
         'TMA': ('*', '*\n'),
         'oji_example': ('**', '**\n'),
@@ -142,7 +142,7 @@ def format_for_discord(serialized_sections):
         url = s['url']
         if url != None:
             superscript_no = int_to_superscript(url_no)
-            text += f' __{text}__`{superscript_no}`'
+            text = f' __{text}__`{superscript_no}`'
             links.append({'no': url_no, 'url':url})
             url_no += 1
 
