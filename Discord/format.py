@@ -2,17 +2,14 @@
 
 import bs4 as bs
 
+def strip_newlines_and_whitespace(string):
+    return string.replace('\n', '').strip()
 
-def fmt_lemma(s):
+
+def fmt_simple(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
-    string_parts = [{'sect':'lemma', 'text':soup.text, 'url':None}]
-
-    return string_parts
-
-
-def fmt_gloss(s):
-    soup = bs.BeautifulSoup(str(s), 'html.parser')
-    string_parts = [{'sect':'gloss', 'text':soup.text, 'url':None}]
+    text = strip_newlines_and_whitespace(soup.text)
+    string_parts = [{'sect':'lemma', 'text':text, 'url':None}]
 
     return string_parts
 
@@ -30,11 +27,18 @@ def fmt_word_parts(s):
     soup = bs.BeautifulSoup(str(s), "html.parser")
     string_parts = []
     
-    for tag in soup.find_all():
-        pass
-        #print(tag)
-        #if tag.name == 'strong':
-        #    string_parts.append({'sect':'orig_word', 'text':tag.text, 'url':None})
+    for child in soup.div.children:
+        if child.name == 'strong':
+            string_parts.append({'sect':'orig_word', 'text':child.text, 'url':None})
+        elif child.name == 'a':
+            string_parts.append({'sect':'link', 'text':child.text, 'url':child['href']})
+        else:
+            string_parts.append({'sect':'text', 'text':child, 'url':None})
+
+    print(string_parts)
+    return string_parts
+
+
 
 
     # cleans / stylizes links. Unrelated to grab_links()
@@ -73,7 +77,6 @@ def fmt_relations(s):
     relations_link = soup.find('a')
     string_parts.append({'sect':'paired_word', 'text': relations_link.text, 'url':relations_link['href']})
 
-    print(string_parts)
     return string_parts
 
 
@@ -87,8 +90,8 @@ def fmt_all(sections):
         formatted_sections: <dict> with fromatted sections as values
     '''
     formatters = {
-        'lemma': fmt_lemma,
-        'gloss': fmt_gloss,
+        'lemma': fmt_simple,
+        'gloss': fmt_simple,
         'inflections': fmt_inflections,
         'word_parts': fmt_word_parts,
         'sentence_examples': fmt_sentence_examples,
