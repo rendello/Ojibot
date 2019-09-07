@@ -47,6 +47,28 @@ def fuzzy_match(requested_word, no_of_returns):
         return highest_matches
 
 
+def get_word_urls(word):
+    ''' Grabs every entry's OPD url-ending for a given word.
+
+    Args:
+        word: <str>, an Ojibwe word.
+
+    Returns:
+        <list> of unique <str>s, the urls for the given words.
+    '''
+    with dbopen('Core/words.db') as c:
+        c.execute('SELECT url FROM words WHERE title=(?)', [word])
+        results = c.fetchall()
+
+        urls = []
+        for result in results:
+            url = result[0].replace('\n', '')
+            if url not in urls:
+                urls.append(url)
+
+        return urls
+
+
 def get_random_word():
     with dbopen('Core/words.db') as c:
         c.execute('SELECT MAX(rowid) FROM words')

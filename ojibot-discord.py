@@ -3,8 +3,8 @@
 import discord
 from discord.ext import commands
 
-from Core.lookup import get_word_urls, fetch_oji_word_info
-from Core.db_lookup import fuzzy_match, get_random_word
+from Core.lookup import fetch_oji_word_info
+from Core.db_lookup import fuzzy_match, get_random_word, get_word_urls
 from Core.normalize import to_rough_fiero
 
 from Discord.secret_token import client_secret
