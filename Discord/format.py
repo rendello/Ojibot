@@ -5,6 +5,14 @@ import bs4 as bs
 def strip_newlines_and_whitespace(string):
     return string.replace('\n', '').strip()
 
+# The serialize_x functions convert the messy html into an intermidiate format
+# that can be used for both Discord and Reddit formatters. Each function returns
+# a <list> of <dicts>.
+
+# The <dicts> represent different elements of what will become the formatted
+# string. They each have a 'sect' (section), so that different sections can be
+# formatted later, some 'text', and a 'url'. The url is almost always None, but
+# if present it can be used to create links by the formatter.
 
 def serialize_lemma(s):
     soup = bs.BeautifulSoup(str(s), 'html.parser')
@@ -119,6 +127,8 @@ def int_to_superscript(integer):
 
 
 def format_for_discord(serialized_sections):
+
+    # tuple[0] = left of string, tuple[1] = right.
     sect_formatting = {
         'lemma': ('**« ',' »**\n'),
         'gloss': ('> ', '\n'),
@@ -142,6 +152,9 @@ def format_for_discord(serialized_sections):
 
         text = s['text']
         url = s['url']
+
+        # Links titles can't be changed in Discord, so use the Wikidepia /
+        # Hacker News method and annotate them at the end of the string.
         if url != None:
             superscript_no = int_to_superscript(url_no)
             text = f' __{text}__`{superscript_no}`'
