@@ -43,6 +43,7 @@ def fuzzy_match(requested_word, no_of_returns):
                         if highest_index != 0:
                             highest_matches.insert(highest_index, db_word)
                             highest_matches.pop(0)
+
         highest_matches.reverse()
         return highest_matches
 

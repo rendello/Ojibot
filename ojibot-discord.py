@@ -39,7 +39,7 @@ def oji_backend(word):
     for url in urls:
         info = fetch_oji_word_info(url)
         serialized = serialize_all(info)
-        string = format_for_discord(serialized)
+        string += format_for_discord(serialized)
 
     return string
 
