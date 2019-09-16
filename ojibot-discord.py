@@ -6,9 +6,9 @@ from discord.ext import commands
 from Core.lookup import fetch_oji_word_info
 from Core.db_lookup import fuzzy_match, get_random_word, get_word_urls
 from Core.normalize import to_rough_fiero
+from Core.format import serialize_all, format_for_discord
 
 from Discord.secret_token import client_secret
-from Discord.format import serialize_all, format_for_discord
 
 bot = commands.Bot(command_prefix='!')
 
