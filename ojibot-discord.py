@@ -8,7 +8,7 @@ from Core.db_lookup import fuzzy_match, get_random_word, get_word_urls
 from Core.normalize import to_rough_fiero
 from Core.format import serialize_all, format_for_discord
 
-from Discord.secret_token import client_secret
+from Core.secret_token import discord_secret
 
 bot = commands.Bot(command_prefix='!')
 
@@ -56,4 +56,4 @@ async def random(ctx):
     await ctx.send(string)
 
 
-bot.run(client_secret)
+bot.run(discord_secret)
