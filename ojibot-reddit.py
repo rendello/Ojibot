@@ -2,10 +2,15 @@
 
 import praw
 
-reddit = praw.Reddit(client_id='kG--QWUCV9GZlg',
-                     client_secret=secret_token,
-                     user_agent='my user agent',
-                     username='my username',
-                     password='my password')
+from Core.secrets import reddit as r
 
-print(reddit.read_only)  # Output: False
+reddit = praw.Reddit(client_id=r['client_id'],
+                     client_secret=r['client_secret'],
+                     user_agent=r['user_agent'],
+                     username=r['username'],
+                     password=r['password']
+                     )
+
+
+for mention in reddit.inbox.mentions(limit=50):
+    print(mention.body)

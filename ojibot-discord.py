@@ -8,7 +8,7 @@ from Core.db_lookup import fuzzy_match, get_random_word, get_word_urls
 from Core.normalize import to_rough_fiero
 from Core.format import serialize_all, format_for_discord
 
-from Core.secret_token import discord_secret
+from Core.secrets import discord_secret
 
 bot = commands.Bot(command_prefix='!')
 
