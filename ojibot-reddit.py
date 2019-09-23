@@ -19,4 +19,4 @@ reddit = praw.Reddit(client_id=r['client_id'],
 for mention in reddit.inbox.mentions(limit=50):
     print(mention.body)
     #mention.reply(oji_backend('anishinaabemowin'))
-    print(backend.to_eng('Anishinaabemowin'))
+    print(backend.to_eng('reddit', 'Anishinaabemowin'))

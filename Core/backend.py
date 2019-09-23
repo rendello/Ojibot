@@ -1,13 +1,12 @@
 #!/usr/bin/python3.6
 
-
 from Core.lookup import fetch_oji_word_info
 from Core.db_lookup import fuzzy_match, get_random_word, get_word_urls
 from Core.normalize import to_rough_fiero
-from Core.format import serialize_all, format_for_discord
+from Core.format import serialize_all, _format
 
 
-def to_eng(word):
+def to_eng(formatter, word):
     ''' Gets a supposed Ojibwe word from the chat, and gives the definiton and
     other word information. Tries to find the closest word if the spelling's
     not exactly the same.
@@ -33,10 +32,11 @@ def to_eng(word):
     for url in urls:
         info = fetch_oji_word_info(url)
         serialized = serialize_all(info)
-        string += format_for_discord(serialized)
+        string += _format(formatter, serialized)
 
     return string
 
-def random_to_eng():
-    string = to_eng(get_random_word())
+
+def random_to_eng(formatter):
+    string = to_eng(formatter, get_random_word())
     return string

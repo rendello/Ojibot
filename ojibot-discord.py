@@ -8,15 +8,16 @@ from Core.secrets import discord_secret
 
 bot = commands.Bot(command_prefix='!')
 
+
 @bot.command()
 async def oji(ctx, word):
-    string = backend.to_eng(word)
+    string = backend.to_eng('discord', word)
     await ctx.send(string)
 
 
 @bot.command()
 async def random(ctx):
-    string = backend.random_to_eng()
+    string = backend.random_to_eng('discord')
     await ctx.send(string)
 
 

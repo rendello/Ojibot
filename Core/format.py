@@ -127,7 +127,6 @@ def int_to_superscript(integer):
 
 
 def format_for_discord(serialized_sections):
-
     # tuple[0] = left of string, tuple[1] = right.
     sect_formatting = {
         'lemma': ('**« ',' »**\n'),
@@ -169,3 +168,45 @@ def format_for_discord(serialized_sections):
         string += f'`{str(link["no"])}`: https://ojibwe.lib.umn.edu{link["url"]}\n'
     
     return string
+
+
+def format_for_reddit(serialized_sections):
+    # tuple[0] = left of string, tuple[1] = right.
+    sect_formatting = {
+        'lemma': ('#','\n'),
+        'gloss': ('> ', '\n'),
+        'inflection': ('', ': '),
+        'TMA': ('*', '*\n'),
+        'oji_example': ('**', '**\n'),
+        'eng_example': ('> *', '*\n'),
+        'paired_preamble': ('',''),
+        'paired_word': ('',''),
+        'orig_word': ('',''),
+        'link': ('',''),
+        'text': ('','')
+    }
+
+    string = ''
+
+    for s in serialized_sections:
+        fmt = sect_formatting[s['sect']]
+
+        text = s['text']
+        url = s['url']
+
+        if url != None:
+            text = f'[{text}]({url})'
+
+        sect_string = f'{fmt[0]}{text}{fmt[1]}'
+        string += sect_string
+    string += "\n"
+    
+    return string
+
+
+def _format(formatter, serialized):
+    if formatter == 'reddit':
+        return format_for_reddit(serialized)
+    elif formatter == 'discord':
+        return format_for_discord(serialized)
+
