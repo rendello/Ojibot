@@ -173,7 +173,7 @@ def format_for_discord(serialized_sections):
 def format_for_reddit(serialized_sections):
     # tuple[0] = left of string, tuple[1] = right.
     sect_formatting = {
-        'lemma': ('#','\n'),
+        'lemma': ('**« ',' »**\n'),
         'gloss': ('> ', '\n'),
         'inflection': ('', ': '),
         'TMA': ('*', '*\n'),
@@ -195,7 +195,7 @@ def format_for_reddit(serialized_sections):
         url = s['url']
 
         if url != None:
-            text = f'[{text}]({url})'
+            text = f'[{text}](https://ojibwe.lib.umn.edu{url})'
 
         sect_string = f'{fmt[0]}{text}{fmt[1]}'
         string += sect_string
