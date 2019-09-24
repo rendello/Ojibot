@@ -6,7 +6,7 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
 import sqlite3
-from Core.Tools.db_context_manager import dbopen
+from Core.db_context_manager import dbopen
 
 from Core.normalize import to_rough_fiero
 
