@@ -38,11 +38,14 @@ for mention in reddit.inbox.mentions(limit=10):
     # translated.
     if body == '':
         parent = mention.parent()
+
+        # Check if parent is a comment and not the submission
         if type(parent) == praw.models.reddit.comment.Comment:
             body = normalize(parent.body)
         else:
             #mention.reply('No command, translatable text, or parent comment found.')
             print('No command, translatable text, or parent comment found.')
+            continue
 
     if is_english(body):
         pass
