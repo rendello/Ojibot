@@ -5,6 +5,7 @@ import praw
 import Core.backend as backend
 
 from Core.secrets import reddit as r
+from Core.detect_language import is_english
 
 
 reddit = praw.Reddit(client_id=r['client_id'],
@@ -15,8 +16,36 @@ reddit = praw.Reddit(client_id=r['client_id'],
                      )
 
 
+def normalize(text):
+    return text.lower().strip()
 
-for mention in reddit.inbox.mentions(limit=1):
-    print(mention.body)
-    #mention.reply(backend.to_eng('reddit', 'Anishinaabemowin'))
-    print(backend.to_eng('reddit', 'Anishinaabemowin'))
+
+def strip_mention(text):
+    return text.replace('/u/ojibot', '', 1)
+
+
+for mention in reddit.inbox.mentions(limit=10):
+    body = strip_mention(normalize(mention.body))
+
+
+    # ... todo specific commands here
+
+
+    # No commands? The user must just want some text translated. Find out if
+    # it's English or Ojibwe so you can translate in the right direction.
+
+    # No text after the mention even? They must want the previous comment
+    # translated.
+    if body == '':
+        parent = mention.parent()
+        if type(parent) == praw.models.reddit.comment.Comment:
+            body = normalize(parent.body)
+        else:
+            #mention.reply('No command, translatable text, or parent comment found.')
+            print('No command, translatable text, or parent comment found.')
+
+    if is_english(body):
+        pass
+    else:
+        #mention.reply(backend.to_eng('reddit', body))
+        print(backend.to_eng('reddit', body))

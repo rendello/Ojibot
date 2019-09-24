@@ -19,6 +19,7 @@ def to_eng(formatter, word):
         string: a <str> of nicely formatted information about the requested
         word (or whatever word's most similar).
     '''
+
     urls = get_word_urls(word)
 
     # Find the closest word if the specific requested spelling's not in db
