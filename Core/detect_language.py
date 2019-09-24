@@ -1,10 +1,38 @@
 #!/usr/bin/python3.6
 
 import sqlite3
+import re
+
 from db_context_manager import dbopen
 
-with dbopen('Core/words.db') as c:
-    
-    with open('Core/common-english-words.txt') as f:
-        for line in f:
-            c.execute('INSERT INTO common_english_words(word) VALUES(?)', [line.strip('\n')])
+def is_english(text):
+    ''' Returns True is text is likely English, False if not.
+
+    Splits text into words and checks those words against the database of
+    common English words. If the ratio of English words / total words is high
+    enough, returns True.
+
+    Args:
+        text: a <string> of text.
+
+    Returns:
+        <bool> True (is English) or False (probably not).
+    '''
+
+    # Makes string alphanumeric but keeps apostraphes
+    alphanumeric_text = re.sub(r"[^a-zA-Z']", ' ', text).lower()
+    words = alphanumeric_text.split()
+
+    no_of_words = len(words)
+    no_of_english_words = 0
+
+    with dbopen('Core/words.db') as c:
+        for word in words:
+            c.execute('SELECT word FROM common_english_words WHERE word=?', [word])
+            if c.fetchone() is not None:
+                no_of_english_words += 1
+
+    ratio = no_of_english_words / no_of_words
+    if ratio > 0.6:
+        return True
+    return False
