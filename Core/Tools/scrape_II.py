@@ -28,7 +28,7 @@ def get_examples(link):
     source = urllib.request.urlopen(link).read()
     soup = bs.BeautifulSoup(source, 'lxml')
 
-    example_result = soup.find(id="sentenceExamples"), 'lxml'
+    example_result = soup.find(id="sentenceExamples")
     if example_result == None:
         return
 
