@@ -17,11 +17,16 @@ bot niche!
 Ojibot can be called on reddit with /u/ojibot \<command\>, or on Discord with
 !\<command\> or @[ojibot] \<command\>. The prompt is configurable on each server.
 
+If some text is given instead of a command, it will detect the language and
+translate it into the other language. If there's no text at all, it will try to
+translate the previous comment.
+
 ### Commands
 Parts in square brackets can be omitted.  Commands are case-agnostic. 
 
 | Command | Description |
 | --- | --- |
+| (No command) | See above |
 | eng[lish] | Translates the following words from Ojibwe to English |
 | oji[bwe] | Translates the follwing words from English to Ojibwe |
 | syl[labics] | Converts text into Ojibwe Syllabics |
@@ -72,14 +77,14 @@ pointing. By default, no lenis-fortis distinction is made.
 	- [x] Usable on many servers
 	- [ ] Configurable per-server
 - [ ] Reddit bot
-	- [ ] Has credentials
-	- [ ] Setup / basic functionality
+	- [x] Has credentials
+	- [x] Setup / basic functionality
 	- [ ] Responds to specific commands
 - [ ] Ojibwe to English
 	- [x] Finds correct info
-	- [ ] Formats information correctly
+	- [x] Formats information correctly
 		- [x] Discord
-		- [ ] Reddit
+		- [x] Reddit
 	- [ ] Search / return options
 	- [x] Normalized (lowercase, Fiero) search
 	- [x] Fuzzy search
