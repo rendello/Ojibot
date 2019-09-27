@@ -35,11 +35,13 @@ def get_soup(url):
 def fetch_example_section(url):
     soup = get_soup(url)
 
-    result = str(soup.find(id="sentenceExamples"))
+    result = soup.find(id="sentenceExamples")
+    if result is not None:
+        result = str(result)
     return result
 
 
-def extract_examples(example_section):
+def extract_examples(example_section, url):
     soup = bs.BeautifulSoup(example_section, 'lxml')
     examples = []
 
@@ -47,6 +49,7 @@ def extract_examples(example_section):
         example = {}
         example['oji'] = row.find('strong').text
         example['eng'] = row.find('small').text
+        example['url'] = url
         examples.append(example)
 
     return examples
@@ -54,7 +57,7 @@ def extract_examples(example_section):
 
 def init_db():
     with dbopen('words.db') as c:
-        c.execute('CREATE TABLE IF NOT EXISTS examples(eng TEXT UNIQUE, oji TEXT UNIQUE)')
+        c.execute('CREATE TABLE IF NOT EXISTS examples(eng TEXT UNIQUE, oji TEXT UNIQUE, url TEXT)')
 
 
 def write_examples_to_db(examples):
@@ -64,18 +67,21 @@ def write_examples_to_db(examples):
     with dbopen('words.db') as c:
         for example in examples:
             try:
-                c.execute('INSERT INTO examples(eng, oji) VALUES (?,?)', (example['eng'], example['oji']))
+                c.execute('INSERT INTO examples(eng, oji, url) VALUES (?,?,?)', (example['eng'], example['oji'], example['url']))
+
+            # If columns aren't unique
             except IntegrityError:
                 pass
 
 
 def wait_a_bit():
-    sleep(uniform(0, 5))
+    sleep(uniform(1, 3))
 
 
 def print_in_place(text, flushzone=150):
     print(' ' * flushzone, end='\r', flush=True)
     print(text, end='\r', flush=True)
+
 
 
 root = 'https://ojibwe.lib.umn.edu/'
@@ -93,15 +99,27 @@ for letter in letters:
 
         soup = get_soup(url)
  
+        # If there are no entry links on the page, we've reached the last page
+        # of results for a given letter.
         links = soup.select("a[href*=main-entry]")
         if links != []:
 
             for link in links:
                 link = url_join('https://ojibwe.lib.umn.edu/', f'{link["href"]}')
 
+                # No need trying to scrape / record everything twice.
+                with dbopen('words.db') as c:
+                    c.execute(f'SELECT * FROM examples WHERE url = ?', [link])
+                    if c.fetchone():
+                        continue
+
                 example_section = fetch_example_section(link)
-                if example_section != None:
-                    section_examples.extend(extract_examples(example_section))
+
+                # We still want the url to know if this entry has been recorded or not
+                if example_section is None:
+                    section_examples.append({'eng': None, 'oji': None, 'url': link})
+                else:
+                    section_examples.extend(extract_examples(example_section, url=link))
 
                     print_in_place(link)
                     wait_a_bit()
