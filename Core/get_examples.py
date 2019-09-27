@@ -70,7 +70,7 @@ def write_examples_to_db(examples):
 
 
 def wait_a_bit():
-    sleep(uniform(0, 10))
+    sleep(uniform(0, 5))
 
 
 def print_in_place(text, flushzone=150):
@@ -86,8 +86,8 @@ init_db()
 
 for letter in letters:
     
-    section_examples = []
     for page in to_infinity():
+        section_examples = []
 
         url = url_join(root, f'browse/ojibwe/{letter}?page={str(page)}')
 
@@ -104,9 +104,8 @@ for letter in letters:
                     section_examples.extend(extract_examples(example_section))
 
                     print_in_place(link)
-
                     wait_a_bit()
+
+            write_examples_to_db(section_examples)
         else:
             break
-
-    write_examples_to_db(section_examples)
