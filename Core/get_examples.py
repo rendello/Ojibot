@@ -29,12 +29,17 @@ def url_join(*urls):
 
 
 def get_soup(url):
-    source = urllib.request.urlopen(url).read()
-    return bs.BeautifulSoup(source, 'lxml')
+    try:
+        source = urllib.request.urlopen(url).read()
+        return bs.BeautifulSoup(source, 'lxml')
+    except urllib.error.HTTPError:
+        return None
 
 
 def fetch_example_section(url):
     soup = get_soup(url)
+    if soup is None:
+        return None
 
     result = soup.find(id="sentenceExamples")
     if result is not None:
