@@ -75,7 +75,7 @@ def write_example_to_db(example, cursor):
 
 
 def wait_a_bit():
-    sleep(uniform(1, 3))
+    sleep(uniform(1, 5))
 
 
 def print_in_place(text, flushzone=150):
