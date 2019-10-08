@@ -1,36 +1,32 @@
-
 # Ojibot: The Ojibwe Reddit and Discord Bot
 Ojibot is a bot for Discord and Reddit that performs tasks relating to the
-Ojibwe language, aka Anishinaabemowin.
+[Ojibwe language](https://en.wikipedia.org/wiki/Ojibwe_language).
+
+*Ojibot is a work in progress and is not finished!*
 
 ![Ojibot cover featuring Thunderbird](Gitlab_images/cover.png)
 
 ## Synopsis
-Reddit is a website composed of many thousands of user-made forums called
-'subreddits'. Discord is a site with user-made chatrooms called 'Discord
-servers'. Both of these services host dedicated communities of First Nations'
-language learners, and both sites allow for automated accounts that respond to
-comments with useful information. This project is meant to fill the Ojibwe-language
-bot niche!
+Ojibot is a *bot* for both the Discord chat application, and the Reddit forum
+website. It can respond to user *commands* with different useful functions.
+Described in more detail below, these functions include:
+- translating to and from Ojibwe,
+- transliterating between Latin and Syllabic scripts, and
+- getting useful Ojibwe guides
 
 ## Usage
 Ojibot can be called on reddit with /u/ojibot \<command\>, or on Discord with
-!\<command\> or @[ojibot] \<command\>. The prompt is configurable on each server.
+!\<command\> (the prompt is configurable on each server).
 
-If some text is given instead of a command, it will detect the language and
-translate it into the other language. If there's no text at all, it will try to
-translate the previous comment.
-
-### Commands
 Parts in square brackets can be omitted.  Commands are case-agnostic. 
 
 | Command | Description |
 | --- | --- |
-| (No command) | See above |
+| (No command) | Detects the text's language and translates it into the other. If there's no text at all, it will try to translate the previous comment. |
 | eng[lish] | Translates the following words from Ojibwe to English |
 | oji[bwe] | Translates the follwing words from English to Ojibwe |
 | syl[labics] | Converts text into Ojibwe Syllabics |
-| rom[an] | Converts syllabics into romanized text |
+| la[tin] | Converts syllabics into romanized text |
 | guide | Shows a writing guide for Ojibwe |
 | syl-guide | Shows a writing guide for Ojibwe Syllabics |
 
@@ -45,30 +41,6 @@ There is no need to install any of these files or install the bot itself, but
 as Open Source software you may run it yourself and/or modify it, just be sure
 to follow the license and change the fork's name.
 
-### Detailed Command Overview
-Commands can take options for more granular outputs. Options are written like
-arguments in many programming languages, taking the form
-`command(option1="value", option2="other_value")`.
-
-#### eng[lish]
-The Ojibwe People's Dictionary, used for this project, uses Fiero Double Vowel
-orthography.
-
-In this program, words like “gitchi” or “gici” automatically become “gichi”,
-“ânîn” becomes “aaniin”, and so on (if they aren't found right away). The word
-is then searched in the database, and the closest match is shown.
-
-If a word is found in the database, the definition will be returned. TODO what other data?
-
-#### oji[bwe]
-Same process as above, without the Fiero-orthography conversions.
-
-#### syl[labics]
-Words are case-normalized and roughly converted to Fiero double-vowel
-orthography. The words are then converted and returned as syllabic text.
-
-The default syllabics use Eastern a-position finals, left-hand w-dot, and vowel
-pointing. By default, no lenis-fortis distinction is made.
 
 - [ ] Discord bot
 	- [x] Has credentials
